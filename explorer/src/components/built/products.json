@@ -1,0 +1,43 @@
+{
+  "extractedAt": "2026-02-24T00:09:54.738Z",
+  "pageUrl": "https://northwoodscustomcreations.com/collections/all",
+  "count": 4,
+  "items": [
+    {
+      "idx": 3,
+      "title": "V1 Engineering LR4 Fully Built CNC Deluxe Version",
+      "priceText": "Regular price From $1,499.99 Regular price Sale price From $1,499.99 Unit price / per",
+      "badgeText": null,
+      "productUrl": "https://northwoodscustomcreations.com/products/v1-engineering-lr4-48-copy",
+      "primaryImageUrl": "img/IMG_8246.jpg",
+      "hoverImageUrl": "img/e6f7862629adb8655838caec28fe340ecf1b6db1_2_690x267_edecf099-a54a-46d6-acdc-8870613a9106.jpg"
+    },
+    {
+      "idx": 2,
+      "title": "V1 Engineering LR4 Fully Built CNC",
+      "priceText": "Regular price From $1,149.99 Regular price Sale price From $1,149.99 Unit price / per",
+      "badgeText": null,
+      "productUrl": "https://northwoodscustomcreations.com/products/v1-engineering-lr4-fully-built-cnc",
+      "primaryImageUrl": "img/IMG_8246.jpg",
+      "hoverImageUrl": "img/e6f7862629adb8655838caec28fe340ecf1b6db1_2_690x267_edecf099-a54a-46d6-acdc-8870613a9106.jpg"
+    },
+    {
+      "idx": 1,
+      "title": "Partially Assembled V1 Engineering LR4 CNC Machine",
+      "priceText": "Regular price From $899.99 Regular price Sale price From $899.99 Unit price / per",
+      "badgeText": null,
+      "productUrl": "https://northwoodscustomcreations.com/products/partially-assembled-lr4",
+      "primaryImageUrl": "img/IMG_3217.jpg",
+      "hoverImageUrl": "img/IMG_3218.jpg"
+    },
+    {
+      "idx": 0,
+      "title": "LR4 PET-CF Printed Part Set",
+      "priceText": "Regular price From $249.99 Regular price Sale price From $249.99 Unit price / per",
+      "badgeText": null,
+      "productUrl": "https://northwoodscustomcreations.com/products/lr4-pet-cf-printed-parts",
+      "primaryImageUrl": "img/IMG_3352.jpg",
+      "hoverImageUrl": "img/IMG_3357.jpg"
+    }
+  ]
+}

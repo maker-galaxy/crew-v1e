@@ -1,0 +1,83 @@
+:root {
+  --road-bottom-overlap: 18px;
+  --road-width-min: 420px;
+  --road-width-vw: 1vw;
+  --road-width-max: 860px;
+  --road-height-min: 300px;
+  --road-height-vh: 50vh;
+  --road-height-max: 760px;
+  --road-opacity: 0.94;
+  --road-shadow-primary: rgba(255, 166, 0, 0.20);
+  --road-shadow-highlight: rgba(255, 235, 153, 0.16);
+
+  --road-outline-color: rgba(255, 209, 90, 0.52);
+  --road-highlight-color: rgba(255, 245, 190, 0.22);
+  --road-seam-color: rgba(120, 74, 0, 0.48);
+
+  --road-brick-mortar: rgba(152, 92, 0, 0.24);
+  --road-brick-a: #ffd84e;
+  --road-brick-b: #ffca2e;
+  --road-brick-c: #ffc21a;
+  --road-brick-d: #ffb709;
+  --road-brick-e: #ffbf18;
+  --road-brick-joint: rgba(118, 70, 0, 0.50);
+
+  --road-tint-bottom: rgba(255, 186, 0, 0.95);
+  --road-tint-mid: rgba(255, 202, 46, 0.90);
+  --road-tint-upper: rgba(255, 220, 110, 0.75);
+  --road-tint-top: rgba(255, 237, 170, 0.08);
+}
+
+.goldRoad {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% - var(--road-bottom-overlap));
+  transform: translateX(-50%);
+  width: clamp(var(--road-width-min), var(--road-width-vw), var(--road-width-max));
+  height: clamp(var(--road-height-min), var(--road-height-vh), var(--road-height-max));
+  pointer-events: none;
+  z-index: 1;
+  opacity: var(--road-opacity);
+  filter:
+    drop-shadow(0 8px 22px var(--road-shadow-primary))
+    drop-shadow(0 1px 0 var(--road-shadow-highlight));
+  transform-origin: center bottom;
+}
+
+.goldRoad .road-seam {
+  stroke: var(--road-seam-color);
+  fill: none;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.goldRoad .road-shape-outline {
+  stroke: var(--road-outline-color);
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+  fill: none;
+}
+
+.goldRoad .road-shape-highlight {
+  stroke: var(--road-highlight-color);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  fill: none;
+}
+
+.chooser.ff-road-off .goldRoad {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.chooser.ff-road-on .goldRoad {
+  opacity: var(--road-opacity) !important;
+  visibility: visible !important;
+}
+
+.chooser.is-selected .goldRoad {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 180ms ease, visibility 0ms linear 180ms;
+}

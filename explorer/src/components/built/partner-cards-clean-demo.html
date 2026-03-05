@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Partner Cards – Clean Pattern Demo</title>
+  <style>
+    /* =========================================================
+       PARTNER CARDS – CLEAN, FIXED CLASS SET
+       Goals:
+       - Works for: image-only, image+text, text-only
+       - Always shows: location glyph
+       - Optional: region flag badge
+       - No brand-specific CSS classes required
+       - Consistent hover grow + glow
+       ========================================================= */
+
+    :root{
+      --page-bg: #111214;
+      --page-fg: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+
+      --card-bg: rgba(255,255,255,.06);
+      --card-border: rgba(255,255,255,.14);
+      --card-radius: 16px;
+
+      --pad-x: 14px;
+      --pad-y: 12px;
+      --gap: 12px;
+
+      --logo-size: 56px;     /* square/circle logo slot */
+      --flag-size: 24px;     /* corner badge */
+      --icon-size: 18px;     /* location glyph */
+
+      --hover-scale: 1.035;
+      --hover-glow: 0 10px 28px rgba(0,0,0,.42), 0 0 0 1px rgba(255,255,255,.22), 0 0 22px rgba(255,255,255,.12);
+
+      --focus-ring: 0 0 0 3px rgba(120, 170, 255, .45);
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      background: radial-gradient(1200px 600px at 50% -10%, rgba(70,120,90,.25), rgba(0,0,0,0) 55%),
+                  var(--page-bg);
+      color: var(--page-fg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    .wrap{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 22px 16px 34px;
+    }
+
+    h1{
+      font-size: 20px;
+      margin: 0 0 6px;
+      letter-spacing: .01em;
+    }
+    p{
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.4;
+      font-size: 14px;
+    }
+
+    /* Grid */
+    .partner-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    /* =========================================================
+       Core component: .partner-card
+       ========================================================= */
+    .partner-card{
+      position: relative;
+      display:flex;
+      align-items:center;
+      gap: var(--gap);
+      padding: var(--pad-y) var(--pad-x);
+      border-radius: var(--card-radius);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      text-decoration:none;
+      color: inherit;
+      min-height: 78px;
+
+      box-shadow: 0 10px 24px rgba(0,0,0,.26);
+      transition: transform .14s ease, box-shadow .16s ease, border-color .16s ease, background-color .16s ease;
+      will-change: transform;
+      outline: none;
+    }
+
+    .partner-card:hover{
+      transform: scale(var(--hover-scale));
+      box-shadow: var(--hover-glow);
+      border-color: rgba(255,255,255,.22);
+      background: rgba(255,255,255,.075);
+    }
+
+    .partner-card:focus-visible{
+      box-shadow: var(--hover-glow), var(--focus-ring);
+    }
+
+    /* Left slot: optional logo area */
+    .partner-logo{
+      width: var(--logo-size);
+      height: var(--logo-size);
+      flex: 0 0 var(--logo-size);
+      display:grid;
+      place-items:center;
+      border-radius: 14px;
+      overflow:hidden;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.16);
+    }
+
+    .partner-logo img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+    }
+
+    /* Switch logo slot to a circle without brand-specific CSS */
+    .partner-card[data-logo-shape="circle"] .partner-logo{
+      border-radius: 999px;
+    }
+
+    /* If a partner has NO image, the logo slot can be hidden entirely */
+    .partner-card[data-has-logo="false"] .partner-logo{
+      display:none;
+    }
+
+    /* Text block */
+    .partner-text{
+      min-width: 0;
+      display:flex;
+      flex-direction:column;
+      gap: 2px;
+      flex: 1 1 auto;
+    }
+
+    .partner-name{
+      font-weight: 750;
+      letter-spacing: .01em;
+      line-height: 1.05;
+      font-size: 16px;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow:hidden;
+    }
+
+    .partner-meta{
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.2;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow:hidden;
+    }
+
+    /* If the card is image-only, hide the text block without a special class */
+    .partner-card[data-has-text="false"] .partner-text{
+      display:none;
+    }
+
+    /* Right-side fixed slot: location glyph (always present) */
+    .partner-loc{
+      flex: 0 0 auto;
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      color: rgba(255,255,255,.85);
+      margin-left: auto;
+    }
+
+    .partner-loc .loc-icon{
+      width: var(--icon-size);
+      height: var(--icon-size);
+      display:block;
+      opacity: .92;
+    }
+
+    .partner-loc .loc-text{
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* If you want text-less location (glyph only), do it via data attribute */
+    .partner-card[data-loc-style="icon"] .partner-loc .loc-text{
+      display:none;
+    }
+
+    /* Corner badge: region flag (optional) – anchored to the CARD */
+    .partner-flag{
+      position:absolute;
+      right: -6px;
+      bottom: -6px;
+      width: var(--flag-size);
+      height: var(--flag-size);
+      border-radius: 999px;
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+      background: rgba(0,0,0,.42);
+      border: 1px solid rgba(255,255,255,.22);
+      box-shadow: 0 6px 16px rgba(0,0,0,.38);
+      pointer-events:none;
+    }
+
+    .partner-card[data-has-flag="false"] .partner-flag{
+      display:none;
+    }
+
+    .partner-flag img, .partner-flag svg{
+      width: 100%;
+      height: 100%;
+      display:block;
+    }
+
+    /* Small demo polish */
+    .chiprow{
+      display:flex;
+      gap: 8px;
+      flex-wrap:wrap;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .chip{
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      border-radius: 999px;
+      padding: 6px 10px;
+    }
+
+    @media (max-width: 420px){
+      .partner-loc .loc-text{ display:none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Partner cards (clean, fixed pattern)</h1>
+    <p>
+      This file demonstrates a single <code>.partner-card</code> component that supports
+      image-only, image+text, and text-only partners. Every partner shows a location glyph.
+      The region flag is an optional corner badge anchored to the card container.
+    </p>
+
+    <div class="partner-grid" aria-label="Reseller / partner options">
+      <!-- 1) Image-only (no text), location glyph only -->
+      <a class="partner-card"
+         href="#"
+         data-has-logo="true"
+         data-logo-shape="rect"
+         data-has-text="false"
+         data-loc-style="icon"
+         data-has-flag="true"
+         aria-label="North Woods (US) – image only">
+        <div class="partner-logo" aria-hidden="true">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Crect width='120' height='120' rx='16' fill='%23ffffff'/%3E%3Cpath d='M22 92 L44 52 L34 52 L52 28 L42 28 L60 8 L78 28 L68 28 L86 52 L76 52 L98 92 Z' fill='%230d5d2a'/%3E%3Ctext x='60' y='112' font-size='14' text-anchor='middle' fill='%23111111' font-family='Arial'%3ENorth Woods%3C/text%3E%3C/svg%3E" alt="">
+        </div>
+
+        <div class="partner-text">
+          <div class="partner-name">North Woods</div>
+          <div class="partner-meta">Custom Creations</div>
+        </div>
+
+        <div class="partner-loc" aria-label="Location: USA">
+          <svg class="loc-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor" d="M12 2c3.31 0 6 2.69 6 6 0 4.4-6 14-6 14S6 12.4 6 8c0-3.31 2.69-6 6-6zm0 8.5A2.5 2.5 0 1 0 12 5a2.5 2.5 0 0 0 0 5z"/>
+          </svg>
+          <span class="loc-text">USA</span>
+        </div>
+
+        <span class="partner-flag" aria-hidden="true" title="US">
+          <svg viewBox="0 0 64 64">
+            <rect width="64" height="64" fill="#fff"/>
+            <g fill="#b22234">
+              <rect y="0" width="64" height="6"/>
+              <rect y="12" width="64" height="6"/>
+              <rect y="24" width="64" height="6"/>
+              <rect y="36" width="64" height="6"/>
+              <rect y="48" width="64" height="6"/>
+              <rect y="60" width="64" height="4"/>
+            </g>
+            <rect width="28" height="26" fill="#3c3b6e"/>
+            <g fill="#fff">
+              <circle cx="5" cy="6" r="1.4"/><circle cx="11" cy="6" r="1.4"/><circle cx="17" cy="6" r="1.4"/><circle cx="23" cy="6" r="1.4"/>
+              <circle cx="8" cy="12" r="1.4"/><circle cx="14" cy="12" r="1.4"/><circle cx="20" cy="12" r="1.4"/>
+              <circle cx="5" cy="18" r="1.4"/><circle cx="11" cy="18" r="1.4"/><circle cx="17" cy="18" r="1.4"/><circle cx="23" cy="18" r="1.4"/>
+            </g>
+          </svg>
+        </span>
+      </a>
+
+      <!-- 2) Image + 2 lines of text, circle logo, location text, EU flag -->
+      <a class="partner-card"
+         href="#"
+         data-has-logo="true"
+         data-logo-shape="circle"
+         data-has-text="true"
+         data-loc-style="text"
+         data-has-flag="true"
+         aria-label="HaWiWe (EU)">
+        <div class="partner-logo" aria-hidden="true">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Crect width='120' height='120' rx='60' fill='%23ffffff'/%3E%3Ccircle cx='60' cy='60' r='48' fill='%23f1f1f1'/%3E%3Ctext x='60' y='62' font-size='28' text-anchor='middle' fill='%23111111' font-family='Arial' font-weight='700'%3EHaWiWe%3C/text%3E%3Ctext x='60' y='84' font-size='12' text-anchor='middle' fill='%23666666' font-family='Arial'%3EWood + 3D%3C/text%3E%3C/svg%3E" alt="">
+        </div>
+
+        <div class="partner-text">
+          <div class="partner-name">HaWiWe</div>
+          <div class="partner-meta">Wood design and 3D printing</div>
+        </div>
+
+        <div class="partner-loc" aria-label="Location: EU">
+          <svg class="loc-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor" d="M12 2c3.31 0 6 2.69 6 6 0 4.4-6 14-6 14S6 12.4 6 8c0-3.31 2.69-6 6-6zm0 8.5A2.5 2.5 0 1 0 12 5a2.5 2.5 0 0 0 0 5z"/>
+          </svg>
+          <span class="loc-text">EU</span>
+        </div>
+
+        <span class="partner-flag" aria-hidden="true" title="EU">
+          <svg viewBox="0 0 64 64">
+            <rect width="64" height="64" fill="#003399"/>
+            <g fill="#ffcc00">
+              <circle cx="32" cy="12" r="2.5"/>
+              <circle cx="32" cy="12" r="2.5" transform="rotate(30 32 32)"/>
+              <circle cx="32" cy="12" r="2.5" transform="rotate(60 32 32)"/>
+              <circle cx="32" cy="12" r="2.5" transform="rotate(90 32 32)"/>
+              <circle cx="32" cy="12" r="2.5" transform="rotate(120 32 32)"/>
+              <circle cx="32" cy="12" r="2.5" transform="rotate(150 32 32)"/>
+              <circle cx="32" cy="12" r="2.5" transform="rotate(180 32 32)"/>
+              <circle cx="32" cy="12" r="2.5" transform="rotate(210 32 32)"/>
+              <circle cx="32" cy="12" r="2.5" transform="rotate(240 32 32)"/>
+              <circle cx="32" cy="12" r="2.5" transform="rotate(270 32 32)"/>
+              <circle cx="32" cy="12" r="2.5" transform="rotate(300 32 32)"/>
+              <circle cx="32" cy="12" r="2.5" transform="rotate(330 32 32)"/>
+            </g>
+          </svg>
+        </span>
+      </a>
+
+      <!-- 3) Text-only (no logo image), 2 lines, location, NO flag -->
+      <a class="partner-card"
+         href="#"
+         data-has-logo="false"
+         data-has-text="true"
+         data-loc-style="text"
+         data-has-flag="false"
+         aria-label="Local Maker Co-op (Canada) – text only">
+        <div class="partner-logo" aria-hidden="true"></div>
+
+        <div class="partner-text">
+          <div class="partner-name">Local Maker Co‑op</div>
+          <div class="partner-meta">Printed parts • Pickup available</div>
+        </div>
+
+        <div class="partner-loc" aria-label="Location: Canada">
+          <svg class="loc-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor" d="M12 2c3.31 0 6 2.69 6 6 0 4.4-6 14-6 14S6 12.4 6 8c0-3.31 2.69-6 6-6zm0 8.5A2.5 2.5 0 1 0 12 5a2.5 2.5 0 0 0 0 5z"/>
+          </svg>
+          <span class="loc-text">Canada</span>
+        </div>
+
+        <span class="partner-flag" aria-hidden="true"></span>
+      </a>
+
+      <!-- 4) Image + text, icon-only location, region flag -->
+      <a class="partner-card"
+         href="#"
+         data-has-logo="true"
+         data-logo-shape="rect"
+         data-has-text="true"
+         data-loc-style="icon"
+         data-has-flag="true"
+         aria-label="Reseller X (UK)">
+        <div class="partner-logo" aria-hidden="true">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Crect width='120' height='120' rx='16' fill='%23ffffff'/%3E%3Crect x='18' y='18' width='84' height='52' rx='10' fill='%231b1b1b'/%3E%3Ctext x='60' y='50' font-size='22' text-anchor='middle' fill='%23ffffff' font-family='Arial' font-weight='700'%3ERX%3C/text%3E%3Ctext x='60' y='96' font-size='14' text-anchor='middle' fill='%23111111' font-family='Arial'%3EReseller X%3C/text%3E%3C/svg%3E" alt="">
+        </div>
+
+        <div class="partner-text">
+          <div class="partner-name">Reseller X</div>
+          <div class="partner-meta">Ships next‑day • Parts & kits</div>
+        </div>
+
+        <div class="partner-loc" aria-label="Location: UK">
+          <svg class="loc-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor" d="M12 2c3.31 0 6 2.69 6 6 0 4.4-6 14-6 14S6 12.4 6 8c0-3.31 2.69-6 6-6zm0 8.5A2.5 2.5 0 1 0 12 5a2.5 2.5 0 0 0 0 5z"/>
+          </svg>
+          <span class="loc-text">UK</span>
+        </div>
+
+        <span class="partner-flag" aria-hidden="true" title="UK">
+          <svg viewBox="0 0 64 64">
+            <rect width="64" height="64" fill="#012169"/>
+            <path d="M0 0 L64 64 M64 0 L0 64" stroke="#fff" stroke-width="10"/>
+            <path d="M0 0 L64 64 M64 0 L0 64" stroke="#c8102e" stroke-width="6"/>
+            <rect x="27" width="10" height="64" fill="#fff"/>
+            <rect y="27" width="64" height="10" fill="#fff"/>
+            <rect x="29" width="6" height="64" fill="#c8102e"/>
+            <rect y="29" width="64" height="6" fill="#c8102e"/>
+          </svg>
+        </span>
+      </a>
+    </div>
+
+    <div class="chiprow" aria-hidden="true">
+      <span class="chip">Classes used: <code>.partner-grid</code>, <code>.partner-card</code>, <code>.partner-logo</code>, <code>.partner-text</code>, <code>.partner-name</code>, <code>.partner-meta</code>, <code>.partner-loc</code>, <code>.partner-flag</code></span>
+      <span class="chip">Variation uses <code>data-*</code> attributes (no per-partner CSS)</span>
+    </div>
+  </div>
+</body>
+</html>

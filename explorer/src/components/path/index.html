@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Choose Path</title>
+  <link rel="stylesheet" href="./path-choice-tabs.css">
+  <link rel="stylesheet" href="./effects/yellow-brick-road.css">
+</head>
+<body>
+  <main class="chooser" id="chooserRoot">
+    <section class="panels" aria-label="Path content panels">
+      <article class="panel panel-diy" data-choice="diy">
+        <iframe title="DIY" data-src="../diy_lr4_printables/lr4.html" loading="lazy"></iframe>
+        <!-- <iframe title="DIY" src="../diy/index.html"></iframe> -->
+      </article>
+      <article class="panel panel-kits" data-choice="kits">
+        <iframe title="Kits" data-src="../kits/index.html" loading="lazy"></iframe>
+      </article>
+      <article class="panel panel-built" data-choice="built">
+        <iframe title="Built" data-src="../built/index.html" loading="lazy"></iframe>
+      </article>
+    </section>
+
+    <div class="dim-mask" aria-hidden="true"></div>
+
+    <section class="cta" aria-label="Path chooser">
+      <header class="ctaHead">
+        <h1 class="ctaTitle">Choose Your Build Adventure…</h1>
+        <p class="ctaSubline">There’s no wrong answer — just different paths.</p>
+      </header>
+
+      <div class="ctaButtons" role="tablist" aria-label="Build path choices">
+        <svg aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute;overflow:hidden">
+          <defs>
+            <symbol id="pillIconWrench" viewBox="0 0 24 24">
+              <path d="M21 7.5a6.5 6.5 0 0 1-8.93 6.04l-6.8 6.8a1.5 1.5 0 0 1-2.12-2.12l6.8-6.8A6.5 6.5 0 0 1 16.5 3l-2.1 2.1 4.5 4.5L21 7.5Z" stroke="rgba(255,255,255,0.92)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+            </symbol>
+            <symbol id="pillIconBox" viewBox="0 0 24 24">
+              <path d="M21 8.5 12 13.5 3 8.5 12 3.5 21 8.5Z" stroke="rgba(255,255,255,0.92)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M21 8.5v7.8c0 .6-.3 1.2-.8 1.5l-7.4 4.3c-.5.3-1.1.3-1.6 0L3.8 17.8c-.5-.3-.8-.9-.8-1.5V8.5" stroke="rgba(255,255,255,0.92)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M12 13.5v9" stroke="rgba(255,255,255,0.92)" stroke-width="1.6" stroke-linecap="round"></path>
+            </symbol>
+            <symbol id="pillIconRocket" viewBox="0 0 24 24">
+              <path d="M14 4c4 1 6 5 6 8-3 0-7 2-8 6-4-1-8-5-8-8 3 0 7-2 10-6Z" stroke="rgba(255,255,255,0.92)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M9 15 5 19l1.5-5.5L9 15Z" stroke="rgba(255,255,255,0.92)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M15 9.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" stroke="rgba(255,255,255,0.92)" stroke-width="1.6"></path>
+            </symbol>
+          </defs>
+        </svg>
+
+        <svg class="goldRoad" viewBox="0 0 760 780" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMax meet">
+          <defs>
+            <clipPath id="goldRoadClip" clipPathUnits="userSpaceOnUse">
+              <path id="goldRoadShape" d="M380 764 L380 764 Z"></path>
+            </clipPath>
+
+            <pattern id="goldBrickPattern" width="68" height="36" patternUnits="userSpaceOnUse">
+              <rect width="68" height="36" style="fill: var(--road-brick-mortar)"></rect>
+              <rect x="2" y="2" width="30" height="14" rx="2.2" style="fill: var(--road-brick-a)"></rect>
+              <rect x="36" y="2" width="30" height="14" rx="2.2" style="fill: var(--road-brick-b)"></rect>
+              <rect x="19" y="19" width="30" height="14" rx="2.2" style="fill: var(--road-brick-c)"></rect>
+              <rect x="2" y="19" width="13" height="14" rx="2.2" style="fill: var(--road-brick-d)"></rect>
+              <rect x="53" y="19" width="13" height="14" rx="2.2" style="fill: var(--road-brick-e)"></rect>
+              <path d="M34 2V16M19 19V33M49 19V33M1 17.8H67" style="stroke: var(--road-brick-joint)" stroke-width="1.1"></path>
+            </pattern>
+
+            <linearGradient id="goldRoadTint" x1="0" y1="780" x2="0" y2="0" gradientUnits="userSpaceOnUse">
+              <stop id="roadTintStop0" offset="0" style="stop-color: var(--road-tint-bottom)"></stop>
+              <stop id="roadTintStop1" offset="0.4" style="stop-color: var(--road-tint-mid)"></stop>
+              <stop id="roadTintStop2" offset="0.72" style="stop-color: var(--road-tint-upper)"></stop>
+              <stop id="roadTintStop3" offset="1" style="stop-color: var(--road-tint-top)"></stop>
+            </linearGradient>
+
+            <linearGradient id="goldRoadAlpha" x1="0" y1="780" x2="0" y2="0" gradientUnits="userSpaceOnUse">
+              <stop id="roadMaskStop0" offset="0" stop-color="white"></stop>
+              <stop id="roadMaskStop1" offset="0.28" stop-color="white"></stop>
+              <stop id="roadMaskStop2" offset="0.52" stop-color="rgba(255, 255, 255, 0.32)"></stop>
+              <stop id="roadMaskStop3" offset="0.70" stop-color="rgba(255, 255, 255, 0.07)"></stop>
+              <stop id="roadMaskStop4" offset="0.9744" stop-color="rgba(255, 255, 255, 0)"></stop>
+              <stop id="roadMaskStop5" offset="1" stop-color="rgba(255, 255, 255, 0)"></stop>
+            </linearGradient>
+
+            <mask id="goldRoadFadeMask" maskUnits="userSpaceOnUse" x="0" y="0" width="760" height="780">
+              <rect x="0" y="0" width="760" height="780" fill="url(#goldRoadAlpha)"></rect>
+            </mask>
+          </defs>
+
+          <g mask="url(#goldRoadFadeMask)">
+            <rect x="0" y="0" width="760" height="780" clip-path="url(#goldRoadClip)" fill="url(#goldBrickPattern)"></rect>
+            <rect x="0" y="0" width="760" height="780" clip-path="url(#goldRoadClip)" fill="url(#goldRoadTint)"></rect>
+            <g id="goldRoadSeams" clip-path="url(#goldRoadClip)" opacity="0.64"></g>
+            <use href="#goldRoadShape" class="road-shape-outline"></use>
+            <path id="goldRoadCenterline" class="road-shape-highlight" d=""></path>
+          </g>
+        </svg>
+
+        <!-- DIY -->
+        <button class="pill pill--diy" type="button" data-choice="diy" role="tab" aria-selected="false">
+          <span class="pillContent">
+            <span class="pillTop">
+              <svg class="pillIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <use href="#pillIconWrench"></use>
+              </svg>
+              <span class="pillLabel">DIY</span>
+            </span>
+            <span class="pillOutcome">Build it yourself</span>
+            <span class="pillMeta" aria-hidden="true">
+              <span>🛠️ Most hands-on</span>
+              <span>💰 Lowest cost</span>
+            </span>
+          </span>
+        </button>
+
+        <!-- Kits -->
+        <button class="pill pill--kits" type="button" data-choice="kits" role="tab" aria-selected="false">
+          <span class="pillContent">
+            <span class="pillTop">
+              <svg class="pillIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <use href="#pillIconBox"></use>
+              </svg>
+              <span class="pillLabel">Kits</span>
+            </span>
+            <span class="pillOutcome">Get a kit <span class="chip" aria-hidden="true">Most Popular</span></span>
+            <span class="pillMeta" aria-hidden="true">
+              <span>⚡ Fast start</span>
+              <span>🧩 Best balance</span>
+            </span>
+          </span>
+        </button>
+
+        <!-- Built -->
+        <button class="pill pill--built" type="button" data-choice="built" role="tab" aria-selected="false">
+          <span class="pillContent">
+            <span class="pillTop">
+              <svg class="pillIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <use href="#pillIconRocket"></use>
+              </svg>
+              <span class="pillLabel">Built</span>
+            </span>
+            <span class="pillOutcome">Buy it built</span>
+            <span class="pillMeta" aria-hidden="true">
+              <span>🚀 Cut today</span>
+              <span>🧠 Zero assembly</span>
+            </span>
+          </span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="./path-choice-tabs.js"></script>
+  <script src="../../js/shortcutBridge.js"></script>
+</body>
+</html>

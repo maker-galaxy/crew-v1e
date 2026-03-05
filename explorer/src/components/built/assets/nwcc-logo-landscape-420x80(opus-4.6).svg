@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="80" viewBox="0 0 420 80">
+  <defs>
+    <!-- Shared glow filter for titles -->
+    <filter id="titleGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" result="blur1"/>
+      <feMerge>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="subtitleGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="0.6" result="blur2"/>
+      <feMerge>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Dark background -->
+  <rect width="420" height="80" fill="#1f2420" rx="6"/>
+
+  <!-- ===== Faint backdrop tree silhouette (right side, behind text) ===== -->
+  <g opacity="0.035" fill="#90c090" transform="translate(240, -10) scale(0.11)">
+    <path d="M220 820 L320 650 L260 650 L360 500 L300 500 L410 320 L350 320 L470 120 L590 320 L530 320 L640 500 L580 500 L690 650 L630 650 L730 820 Z"/>
+  </g>
+  <g opacity="0.025" fill="#90c090" transform="translate(310, -5) scale(0.09)">
+    <path d="M220 820 L320 650 L260 650 L360 500 L300 500 L410 320 L350 320 L470 120 L590 320 L530 320 L640 500 L580 500 L690 650 L630 650 L730 820 Z"/>
+  </g>
+
+  <!-- ===== 3 Tree silhouettes (left cluster) ===== -->
+  <g fill="#2e6b2e">
+    <!-- Tree 1 (left, medium) -->
+    <g transform="translate(22, 8) scale(0.58)">
+      <polygon points="18,92 0,92 9,72 3,72 9,54 5,54 9,38 6,38 12,20 9,20 18,2 27,20 24,20 30,38 27,38 31,54 27,54 33,72 27,72 36,92"/>
+      <rect x="15" y="92" width="6" height="8" fill="#3d3d2d"/>
+    </g>
+    <!-- Tree 2 (center, tallest) -->
+    <g transform="translate(42, 2) scale(0.65)">
+      <polygon points="20,100 0,100 10,78 3,78 10,58 5,58 10,40 7,40 14,22 10,22 20,2 30,22 26,22 33,40 30,40 35,58 30,58 37,78 30,78 40,100"/>
+      <rect x="17" y="100" width="6" height="9" fill="#3d3d2d"/>
+    </g>
+    <!-- Tree 3 (right, small) -->
+    <g transform="translate(70, 18) scale(0.50)">
+      <polygon points="16,80 0,80 8,62 3,62 8,46 4,46 8,32 5,32 10,16 8,16 16,2 24,16 22,16 27,32 24,32 28,46 24,46 29,62 24,62 32,80"/>
+      <rect x="13" y="80" width="5" height="7" fill="#3d3d2d"/>
+    </g>
+  </g>
+
+  <!-- ===== "NORTH WOODS" title ===== -->
+  <!-- Pathway Gothic One, weight 600, color #114504, tracking 0.03em -->
+  <text
+    x="116" y="48"
+    font-family="'Pathway Gothic One', Arial, sans-serif"
+    font-weight="600"
+    font-size="42"
+    letter-spacing="0.03em"
+    fill="#114504"
+    filter="url(#titleGlow)"
+  >NORTH WOODS</text>
+
+  <!-- ===== "CUSTOM CREATIONS" subtitle ===== -->
+  <!-- Segoe UI Variable Text / Segoe UI, weight 600, color #9ABA51, tracking 0.55em -->
+  <text
+    x="118" y="66"
+    font-family="'Segoe UI Variable Text', 'Segoe UI', Arial, sans-serif"
+    font-weight="600"
+    font-size="11"
+    letter-spacing="0.55em"
+    fill="#9ABA51"
+    filter="url(#subtitleGlow)"
+  >CUSTOM CREATIONS</text>
+
+</svg>

@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>North Woods Custom Creations — Offline Catalog</title>
+  <link rel="stylesheet" href="./section.css" />
+</head>
+<!-- Related Chat https://chatgpt.com/c/699ce13d-1634-832f-a9b1-919388d4b2b7 -->
+<body>
+  <!-- Google Fonts: good “likely match” pool -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Fjalla+One&family=Oswald:wght@600;700&family=Pathway+Gothic+One&family=Roboto+Condensed:wght@700&family=Teko:wght@600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&family=Karla:wght@400&display=swap" rel="stylesheet">
+
+  <div class="page" id="pageRoot">
+
+
+    <header class="header">
+      <div class="header__spacer"></div>
+
+      <div class="header__left">
+        <div class="partners" aria-label="Fulfillment partners">
+
+          <!-- HaWiWe (EU/Germany) -->
+          <a class="partner-card partner-card--eu" href="https://hawiwe.de/" target="_blank" rel="noopener noreferrer"
+            aria-label="HaWiWe (EU)">
+            <span class="partner__logo-wrap">
+              <img class="partner__logo partner__logo--round"
+                  src="./HaWiWe-Clean-Gross-Rund-150x150.png"
+                  alt="HaWiWe logo" referrerpolicy="no-referrer" decoding="async" />
+            </span>
+            <div class="partner__text">
+              <div class="partner__name">HaWiWe</div>
+              <div class="partner__tagline">Wood design and 3D printing</div>
+            </div>
+            <span class="partner__flag" aria-hidden="true">
+              <svg viewBox="0 0 64 64" role="img" aria-label="EU flag">
+                <rect width="64" height="64" fill="#003399" />
+                <g fill="#ffcc00">
+                  <circle cx="32" cy="14" r="2.5" />
+                  <circle cx="32" cy="14" r="2.5" transform="rotate(30 32 32)" />
+                  <circle cx="32" cy="14" r="2.5" transform="rotate(60 32 32)" />
+                  <circle cx="32" cy="14" r="2.5" transform="rotate(90 32 32)" />
+                  <circle cx="32" cy="14" r="2.5" transform="rotate(120 32 32)" />
+                  <circle cx="32" cy="14" r="2.5" transform="rotate(150 32 32)" />
+                  <circle cx="32" cy="14" r="2.5" transform="rotate(180 32 32)" />
+                  <circle cx="32" cy="14" r="2.5" transform="rotate(210 32 32)" />
+                  <circle cx="32" cy="14" r="2.5" transform="rotate(240 32 32)" />
+                  <circle cx="32" cy="14" r="2.5" transform="rotate(270 32 32)" />
+                  <circle cx="32" cy="14" r="2.5" transform="rotate(300 32 32)" />
+                  <circle cx="32" cy="14" r="2.5" transform="rotate(330 32 32)" />
+                </g>
+              </svg>
+            </span>
+          </a>
+
+          <!-- North Woods (US) -->
+          <a class="partner-card partner-card--us"
+            href="https://northwoodscustomcreations.com"
+            target="_blank" rel="noopener noreferrer"
+            aria-label="North Woods Custom Creations (US)">
+            
+            <span class="partner__logo-wrap">
+              <img class="partner__logo" src="./nwcc-logo-with-big-text.png" alt="North Woods Custom Creations logo" />
+            </span>
+            <div class="partner__text">
+              <div class="partner__name"></div>
+              <div class="partner__tagline"></div>
+            </div>
+
+            <span class="partner__flag" aria-hidden="true">
+              <svg viewBox="0 0 64 64" role="img" aria-label="US flag">
+                <rect width="64" height="64" fill="#ffffff" />
+                <rect y="0" width="64" height="5" fill="#b22234" />
+                <rect y="10" width="64" height="5" fill="#b22234" />
+                <rect y="20" width="64" height="5" fill="#b22234" />
+                <rect y="30" width="64" height="5" fill="#b22234" />
+                <rect y="40" width="64" height="5" fill="#b22234" />
+                <rect y="50" width="64" height="5" fill="#b22234" />
+                <rect y="59" width="64" height="5" fill="#b22234" />
+                <rect x="0" y="0" width="30" height="34" fill="#3c3b6e" />
+                <g fill="#ffffff">
+                  <circle cx="5" cy="6" r="1.3" />
+                  <circle cx="11" cy="6" r="1.3" />
+                  <circle cx="17" cy="6" r="1.3" />
+                  <circle cx="23" cy="6" r="1.3" />
+                  <circle cx="8" cy="12" r="1.3" />
+                  <circle cx="14" cy="12" r="1.3" />
+                  <circle cx="20" cy="12" r="1.3" />
+                  <circle cx="5" cy="18" r="1.3" />
+                  <circle cx="11" cy="18" r="1.3" />
+                  <circle cx="17" cy="18" r="1.3" />
+                  <circle cx="23" cy="18" r="1.3" />
+                  <circle cx="8" cy="24" r="1.3" />
+                  <circle cx="14" cy="24" r="1.3" />
+                  <circle cx="20" cy="24" r="1.3" />
+                </g>
+              </svg>
+            </span>
+          </a>
+
+          <!-- Elecrow (China) -->
+          <a class="partner-card partner-card--cn" href="https://www.elecrow.com/store/V1EngineeringInc" target="_blank" rel="noopener noreferrer"
+            aria-label="Elecrow (China)">
+            <span class="partner__logo-wrap">
+              <img class="partner__logo" src="./ELECROW_LOGO.png" alt="Elecrow logo" />
+            </span>
+            <span class="partner__flag" aria-hidden="true">
+              <svg viewBox="0 0 64 64" role="img" aria-label="China flag">
+                <rect width="64" height="64" fill="#de2910" />
+                <polygon points="16,8 19,16 27,16 21,21 23,29 16,24 9,29 11,21 5,16 13,16" fill="#ffde00" />
+                <polygon points="31,7 32,10 35,10 33,12 34,15 31,13 28,15 29,12 27,10 30,10" fill="#ffde00" />
+                <polygon points="37,14 38,17 41,17 39,19 40,22 37,20 34,22 35,19 33,17 36,17" fill="#ffde00" />
+                <polygon points="37,24 38,27 41,27 39,29 40,32 37,30 34,32 35,29 33,27 36,27" fill="#ffde00" />
+                <polygon points="31,31 32,34 35,34 33,36 34,39 31,37 28,39 29,36 27,34 30,34" fill="#ffde00" />
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="header__right">
+        <div class="toolbar__hint" style="display:none;" id="envHint">Offline Snapshot</div>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="toolbar">
+        <div class="toolbar__hint">Catalog</div>
+        <div class="toolbar__count" id="countText">— products</div>
+      </div>
+
+      <section class="grid" id="grid"></section>
+    </main>
+  </div>
+
+  <script src="../../static/vendor/qrcodejs/qrcode.js"></script>
+  <script src="../../js/mge-browse-or-qr-infra.js"></script>
+  <script>
+    // ===========================
+    // CONFIG (grouped for tuning)
+    // ===========================
+
+    const CONFIG = {
+      PRODUCTS_JSON_URL: "./products.json",
+
+      // If PRODUCTS is null, we render the fallback placeholders below.
+      FALLBACK_PRODUCTS: [
+        {
+          title: "V1 Engineering LR4 Fully Built CNC Deluxe Version",
+          priceText: "From $1,499.99",
+          productUrl: "#",
+          primaryImageUrl: "",
+          hoverImageUrl: ""
+        },
+        {
+          title: "V1 Engineering LR4 Fully Built CNC",
+          priceText: "From $1,149.99",
+          productUrl: "#",
+          primaryImageUrl: "",
+          hoverImageUrl: ""
+        },
+        {
+          title: "Partially Assembled V1 Engineering LR4 CNC Machine",
+          priceText: "From $899.99",
+          productUrl: "#",
+          primaryImageUrl: "",
+          hoverImageUrl: ""
+        },
+        {
+          title: "LR4 PET-CF Printed Part Set",
+          priceText: "From $249.99",
+          productUrl: "#",
+          primaryImageUrl: "",
+          hoverImageUrl: ""
+        }
+      ]
+    };
+
+    // ===========================
+    // Helpers
+    // ===========================
+
+    function normalizePriceText(raw) {
+      if (!raw) return "";
+      // Your extracted priceText can include "Regular price ... Sale price ..."
+      // Prefer "From $X" if present; else pick first $amount.
+      const fromMatch = raw.match(/From\s+\$[\d,]+(\.\d{2})?/i);
+      if (fromMatch) return fromMatch[0];
+
+      const money = raw.match(/\$[\d,]+(\.\d{2})?/);
+      return money ? money[0] : raw.replace(/\s+/g, " ").trim();
+    }
+
+    function el(tag, className, text) {
+      const n = document.createElement(tag);
+      if (className) n.className = className;
+      if (text != null) n.textContent = text;
+      return n;
+    }
+
+    async function loadProducts() {
+      try {
+        const res = await fetch(CONFIG.PRODUCTS_JSON_URL, { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        const data = await res.json();
+        if (data && Array.isArray(data.items) && data.items.length) {
+          return data.items;
+        }
+      } catch (err) {
+        console.warn("built.section.products: failed to load products.json, using fallback", err);
+      }
+
+      return CONFIG.FALLBACK_PRODUCTS;
+    }
+
+    function buildProductCard(p) {
+      const card = el("article", "card");
+
+      const media = el("div", "card__media");
+      const img = document.createElement("img");
+      img.alt = p.title || "";
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.referrerPolicy = "no-referrer";
+
+      if (p.primaryImageUrl) {
+        img.src = p.primaryImageUrl;
+      } else {
+        // If no image, keep it blank but still reserve layout space.
+        img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+      }
+
+      // Simple hover swap if hover image exists
+      if (p.hoverImageUrl) {
+        img.addEventListener("mouseenter", () => img.src = p.hoverImageUrl);
+        img.addEventListener("mouseleave", () => img.src = p.primaryImageUrl);
+        img.addEventListener("touchstart", () => img.src = p.hoverImageUrl, { passive: true });
+        img.addEventListener("touchend", () => img.src = p.primaryImageUrl, { passive: true });
+      }
+
+      media.appendChild(img);
+
+      const body = el("div", "card__body");
+      const title = el("h3", "card__title", p.title || "Untitled");
+      const price = el("p", "card__price");
+      const priceLabel = el("span", "", ""); // reserved (you can use for "From")
+      const priceText = document.createTextNode(normalizePriceText(p.priceText));
+      price.appendChild(priceLabel);
+      price.appendChild(priceText);
+
+      const ctaWrap = el("div", "card__cta");
+      const btn = document.createElement("a");
+      btn.className = "button";
+      btn.href = p.productUrl || "#";
+      btn.target = "_blank";
+      btn.rel = "noopener noreferrer";
+      btn.textContent = "Choose options";
+      btn.addEventListener("click", (event) => {
+        event.preventDefault();
+        if (typeof addTrace === "function") {
+          addTrace("info", `BUILT_CTA click href=${btn.href}`);
+        }
+        browse_or_qr(btn.href, { target: "_blank" });
+      });
+
+      ctaWrap.appendChild(btn);
+
+      body.appendChild(title);
+      body.appendChild(price);
+      body.appendChild(ctaWrap);
+
+      card.appendChild(media);
+      card.appendChild(body);
+      return card;
+    }
+
+    function bindPartnerCardsBrowseOrQr() {
+      const partnerCards = document.querySelectorAll(".partner-card");
+      partnerCards.forEach((card) => {
+        card.addEventListener("click", (event) => {
+          event.preventDefault();
+          const href = card.getAttribute("href") || "#";
+          const target = card.getAttribute("target") || "_self";
+          if (typeof addTrace === "function") {
+            addTrace("info", `BUILT_PARTNER click href=${href} target=${target}`);
+          }
+          browse_or_qr(href, { target });
+        });
+      });
+    }
+
+    // ===========================
+    // Render
+    // ===========================
+
+    function applyMode() {
+      const params = new URLSearchParams(window.location.search);
+      const mode = (params.get("mode") || "0").trim();
+      const pageRoot = document.getElementById("pageRoot");
+      const embedMode = mode === "1" || params.get("embedded") === "1";
+      const noAtmosphere = params.get("atmosphere") === "0" || mode === "2";
+
+      if (embedMode) {
+        pageRoot.classList.add("mode-embed");
+      }
+      if (noAtmosphere) {
+        pageRoot.classList.add("mode-no-atmosphere");
+      }
+
+      console.log(`built.section.mode mode=${mode} embed=${embedMode} noAtmosphere=${noAtmosphere}`);
+    }
+
+    (async function init() {
+      applyMode();
+      bindPartnerCardsBrowseOrQr();
+      const grid = document.getElementById("grid");
+      const products = await loadProducts();
+
+      for (const p of products) {
+        grid.appendChild(buildProductCard(p));
+      }
+
+      document.getElementById("countText").textContent = `${products.length} products`;
+    })();
+  </script>
+  <script src="../../js/shortcutBridge.js"></script>
+</body>
+</html>

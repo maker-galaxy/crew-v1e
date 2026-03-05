@@ -1,0 +1,598 @@
+/* store.css
+   Maker Galaxy offline "elevated" store snapshot renderer (North Woods partner)
+   Tuning-first: all key knobs are CSS variables grouped below.
+*/
+
+:root{
+  /* ===========================
+     GLOBAL THEME TOKENS (tune me)
+     =========================== */
+
+  /* Page */
+  --page-bg: #1f2420;               /* subtle dark green tint */
+  --page-fg: rgba(227,231,215,.92); /* readable on dark */
+  --page-fg-muted: #9ABA51; /*rgba(227,231,215,.72);  #9ABA51*/
+  --font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+  /* Layout */
+  --page-pad-x: 16px;
+  --page-pad-y: 12px;
+
+  /* Header */
+  --header-h: 92px;
+  --header-gap: 14px;
+
+  /* Brand lockup */
+  --brand-mark-w: 80px;     /* tree mark width */
+  --brand-title-family: "Segoe UI Variable Text", "Segoe UI", "Arial Narrow", "Roboto Condensed", "Helvetica Neue Condensed", Arial, sans-serif;
+  --brand-title-size: 4rem;
+  --brand-title-weight: 800;
+  --brand-title-tracking: -0.015em;
+  --brand-title-line: 1.00;
+
+  --brand-subtitle-family: "Segoe UI Variable Text", "Segoe UI", Arial, sans-serif;
+  --brand-subtitle-size: 1rem;
+  --brand-subtitle-weight: 600;
+  --brand-subtitle-tracking: 0.55em;
+  --brand-subtitle-opacity-1: 0.2;
+  --brand-subtitle-opacity-2: 0.1;
+
+  /* Glow (layered soft halo) */
+  --brand-glow-color: 255, 255, 255;
+  --brand-glow-a1: 1;
+  --brand-glow-a2: 0.75;
+  --brand-glow-a3: 0.55;
+  --brand-glow-1: 0 0 3px rgba(var(--brand-glow-color), var(--brand-glow-a1));
+  --brand-glow-2: 0 0 10px rgba(var(--brand-glow-color), var(--brand-glow-a2));
+  --brand-glow-3: 0 0 2px rgba(var(--brand-glow-color), var(--brand-glow-a3));
+  --subtitle-glow-1: 0 0 3px rgba(var(--brand-glow-color), calc(var(--brand-glow-a1) * var(--brand-subtitle-opacity-1)));
+  --subtitle-glow-2: 0 0 6px rgba(var(--brand-glow-color), calc(var(--brand-glow-a2) * var(--brand-subtitle-opacity-2)));
+
+  /* Grid behavior
+     - Max 4 cards per row: controlled by --grid-max-w
+     - Card density: controlled by --card-min-w
+  */
+  --grid-max-w: 1400px;                 /* cap so 5 columns doesn't happen */
+  --card-min-w: 260px;                  /* 960px tends to become 3 columns */
+  --grid-gap: clamp(12px, 1.5vw, 22px); /* easy, consistent spacing */
+
+  /* Card */
+  --card-radius: 18px;
+  --card-border: 1px solid rgba(255,255,255,.10);
+  --card-bg: rgba(255,255,255,.03);
+  --card-shadow: 0 10px 30px rgba(0,0,0,.28);
+
+  /* Media (HONOR EXISTING RATIO FIRST CUT)
+     Derived from your earlier observed image box ~281x361 (≈0.778)
+     aspect-ratio: width / height
+  */
+  --media-aspect-w: 281;
+  --media-aspect-h: 361;
+
+  /* Typography inside cards */
+  --title-size: 18px;
+  --title-line: 1.25;
+  --price-size: 16px;
+  --price-weight: 600;
+
+  /* CTA button (tune to your preferred red) */
+  --cta-bg: rgb(200, 0, 0);
+  --cta-bg-hover: rgb(220, 0, 0);
+  --cta-fg: #ffffff;
+  --cta-radius: 24px;
+  --cta-h: 46px;
+
+  /* Partner atmosphere (pine silhouettes) */
+  --forest-opacity: .035;               /* keep subtle */
+  --forest-tint: rgba(120, 200, 120, 1); /* used only as SVG fill via currentColor */
+
+  /* Partner badge sizing */
+  --partner-logo-h: 61px;
+  --partner-pad-y: 4px;
+  --partner-gap: 30px;
+  --partner-flag-size: 22px;
+}
+
+/* ====== Base ====== */
+*{ box-sizing: border-box; }
+html, body{ height:100%; }
+body{
+  margin:0;
+  background: var(--page-bg);
+  color: var(--page-fg);
+  font-family: var(--font-family);
+}
+
+/* ====== Atmosphere Layer (subtle pines) ====== */
+.page{
+  min-height: 100%;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.page.mode-embed .header{
+  display: none;
+}
+
+.page.mode-embed .main{
+  padding-top: 10px;
+}
+
+.page.mode-embed .toolbar{
+  margin-bottom: 8px;
+}
+
+.page.mode-no-atmosphere::before,
+.page.mode-no-atmosphere::after{
+  display: none;
+}
+
+.page::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity: var(--forest-opacity);
+
+  /* Simple inline SVG silhouettes; intentionally low-detail */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='900' viewBox='0 0 1600 900'%3E%3Cg fill='%2390c090'%3E%3Cpath d='M220 820 L320 650 L260 650 L360 500 L300 500 L410 320 L350 320 L470 120 L590 320 L530 320 L640 500 L580 500 L690 650 L630 650 L730 820 Z'/%3E%3Cpath d='M1300 860 L1400 700 L1340 700 L1450 540 L1390 540 L1505 380 L1445 380 L1560 180 L1680 380 L1620 380 L1735 540 L1675 540 L1785 700 L1725 700 L1825 860 Z'/%3E%3C/g%3E%3C/svg%3E");
+
+  background-repeat: no-repeat;
+  background-position: left -140px bottom -30px, right -220px bottom -60px;
+  background-size: 900px auto;
+  filter: blur(0.2px);
+}
+
+/* Optional vignette to keep edges calm */
+.page::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 30%, rgba(0,0,0,.28) 100%);
+}
+
+/* ====== Header ====== */
+.header{
+  position: sticky;
+  top:0;
+  z-index: 20;
+  height: var(--header-h);
+  display:flex;
+  align-items:center;
+  gap: var(--header-gap);
+  padding: var(--page-pad-y) var(--page-pad-x);
+  backdrop-filter: blur(8px);
+  background: rgba(33,33,33,.86);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+}
+
+.header__left{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  min-width: 0;
+  margin-inline: auto;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.brand__mark{
+  width: var(--brand-mark-w);
+  height: calc(var(--header-h) - 10px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  /* border-radius: 10px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08); */
+}
+
+.brand__mark img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display:block;
+}
+
+.brand__text{
+  min-width: 0;
+}
+
+.brand__title{
+
+/* Headline font */
+font-family: "Pathway Gothic One", Arial, sans-serif;
+font-weight: 600;
+letter-spacing: 0.03em;
+text-transform: uppercase;
+
+  /* font-family: var(--brand-title-family);
+  font-weight: var(--brand-title-weight);
+  letter-spacing: var(--brand-title-tracking);
+ */
+  font-size: var(--brand-title-size);
+  line-height: var(--brand-title-line);
+  white-space: nowrap;
+  overflow:hidden;
+  text-overflow: ellipsis;
+  text-shadow: 
+    var(--brand-glow-1), 
+    var(--brand-glow-1), 
+    var(--brand-glow-1), 
+    var(--brand-glow-1), 
+    var(--brand-glow-1), 
+    var(--brand-glow-2), 
+    var(--brand-glow-3);
+  color: #114504;
+}
+
+.brand__subtitle{
+  margin-top: 2px;
+  font-family: var(--brand-subtitle-family);
+  font-size: var(--brand-subtitle-size);
+  font-weight: var(--brand-subtitle-weight);
+  letter-spacing: var(--brand-subtitle-tracking);
+  text-transform: uppercase;
+  color: var(--page-fg-muted);
+  opacity: var(--brand-subtitle-opacity);
+  text-shadow: 
+    var(--subtitle-glow-1), 
+    var(--subtitle-glow-2);
+}
+
+/* ====== Main ====== */
+.main{
+  position: relative;
+  z-index: 5;
+  padding: 16px var(--page-pad-x) 32px;
+}
+
+.toolbar{
+  max-width: var(--grid-max-w);
+  margin: 0 auto 12px;
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.toolbar__hint{
+  color: var(--page-fg-muted);
+  font-size: 14px;
+}
+
+.toolbar__count{
+  color: var(--page-fg-muted);
+  font-size: 14px;
+}
+
+/* ====== Grid ====== */
+.grid{
+  width: min(var(--grid-max-w), calc(100vw - (var(--page-pad-x) * 2)));
+  margin: 0 auto;
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min-w), 1fr));
+  gap: var(--grid-gap);
+}
+
+/* Hard cap at 4 columns no matter what.
+   If you later want 5 columns on huge screens, remove this block. */
+@media (min-width: 1100px){
+  .grid{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ====== Card ====== */
+.card{
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  overflow:hidden;
+  display:flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.card__media{
+  width: 100%;
+  aspect-ratio: calc(var(--media-aspect-w) / var(--media-aspect-h));
+  background: rgba(255,255,255,.02);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  position: relative;
+}
+
+.card__media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display:block;
+}
+
+.card__body{
+  padding: 14px 14px 12px;
+  display:flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1 1 auto;
+}
+
+.card__title{
+  font-size: var(--title-size);
+  line-height: var(--title-line);
+  font-weight: 700;
+  margin:0;
+
+  /* clamp to 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow:hidden;
+}
+
+.card__price{
+  font-size: var(--price-size);
+  font-weight: var(--price-weight);
+  color: var(--page-fg);
+  margin: 0;
+}
+
+.card__price span{
+  color: var(--page-fg-muted);
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+/* ====== CTA ====== */
+.card__cta{
+  margin-top: auto;
+  display:flex;
+}
+
+.button{
+  width: 100%;
+  height: var(--cta-h);
+  border: 0;
+  border-radius: var(--cta-radius);
+  background: var(--cta-bg);
+  color: var(--cta-fg);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: .01em;
+  cursor: pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  transition: transform .06s ease, background-color .12s ease;
+}
+
+.button:hover{ background: var(--cta-bg-hover); }
+.button:active{ transform: translateY(1px); }
+
+/* ====== Small viewport tweaks ====== */
+@media (max-width: 520px){
+  :root{
+    --header-h: 84px;
+    --brand-mark-w: 70px;
+    --brand-title-size: 2rem;
+    --brand-subtitle-size: 0.5rem;
+  }
+}
+
+@media (prefers-color-scheme: light){
+  :root{
+    --brand-glow-a1: 0.10;
+    --brand-glow-a2: 0.07;
+    --brand-glow-a3: 0.05;
+  }
+}
+
+
+/* ===== Header centering fix (copy/paste) ===== */
+
+.header{
+  justify-content: space-between; /* left spacer | centered brand | right controls */
+}
+
+.header__spacer,
+.header__right{
+  flex: 1;             /* equal “wings” => true center */
+  display: flex;
+  align-items: center;
+}
+
+.header__spacer{
+  justify-content: flex-start;
+}
+
+.header__right{
+  justify-content: flex-end;
+}
+
+.header__left{
+  flex: 0 0 auto;
+  margin: 0;           /* IMPORTANT: kills margin-inline:auto */
+}
+
+.brand__text{
+  text-align: center;  /* replaces <center> tag */
+}
+
+
+
+/* ===== Partner badges (NWCC + HaWiWe) ===== */
+
+.partners{
+  display: flex;
+  align-items: center;
+  gap: var(--partner-gap);
+  flex-wrap: wrap;            /* important for smaller widths */
+}
+
+.partner-card{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: calc(var(--partner-logo-h) + (var(--partner-pad-y) * 2));
+  padding:  var(--partner-pad-y) 10px var(--partner-pad-y) 10px;
+  border-radius: 12px;
+
+  text-decoration: none;
+  color: inherit;
+
+  background: #fff;
+  border: 1px solid rgba(255,255,255,.2);
+  box-shadow: 0 10px 22px rgba(0,0,0,.18);
+
+  transition: transform .15s ease, box-shadow .18s ease, border-color .18s ease;
+  will-change: transform;
+}
+
+.partner-card--eu{
+  display: flex;
+  align-items: center;
+  padding-left: 6px;
+  padding-right: 8px;
+}
+
+.partner-card--cn{
+  max-width: 280px;
+}
+
+.partner-card--cn .partner__logo{
+  max-width: 100%;
+}
+
+.partner-card:hover{
+  transform: scale(1.05);
+}
+
+.partner__logo{
+  height: var(--partner-logo-h);
+  width: auto;
+  display: block;
+  border-radius: 10px;        /* matches your NWCC look */
+  /* filter: drop-shadow(0 1px 2px rgba(0,0,0,.24)); */
+}
+
+.partner__logo--round{
+  border-radius: 999px;       /* HaWiWe is circular */
+  height: var(--partner-logo-h);
+}
+
+.partner__logo-wrap{
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+}
+
+.partner__text{
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+  /*padding-right: 16px;         space so the flag doesn’t collide with text */
+}
+
+.partner__name{
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 18px;
+  white-space: nowrap;
+  color: #000;
+}
+
+.partner__tagline{
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--page-fg-muted);
+  opacity: 0.9;
+  white-space: nowrap;
+}
+
+/* Country/region flag chip */
+.partner__flag{
+  position: absolute;
+  right: calc(var(--partner-flag-size) * -0.5);
+  bottom: calc(var(--partner-flag-size) * -0.5);
+  width: var(--partner-flag-size);
+  height: var(--partner-flag-size);
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  /* background: rgba(0,0,0,.35); */
+  border: 0px solid rgba(255,255,255,.25);
+  /* box-shadow: 0 3px 12px rgba(0,0,0,.35); */
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.partner__flag svg{
+  width: var(--partner-flag-size);
+  height: var(--partner-flag-size);
+  display: block;
+}
+
+.partner-card-card--us{
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  padding: var(--partner-pad-y) 0;
+}
+
+.partner-card--us:hover{
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.partner-card--eu .partner__logo{
+  filter: drop-shadow(0 0 0.5px rgba(140,140,140,.95)) drop-shadow(0 1px 2px rgba(0,0,0,.22));
+}
+
+.partner-card--eu:hover{
+  background: #fff;
+  border-color: rgba(255,255,255,.55);
+  box-shadow:
+    0 0 0 .5px rgba(170,170,170,.62),
+    0 0 14px rgba(255,255,255,.20),
+    0 12px 26px rgba(0,0,0,.22);
+}
+
+/* Responsive tightening */
+@media (max-width: 720px){
+  .partner__name{ font-size: 16px; }
+  .partner__tagline{ font-size: 11px; }
+}
+
+
+/* HaWiWe brand-accurate type (scoped) */
+.partner-card--eu .partner__name{
+  font-family: Rubik, system-ui, sans-serif;
+  font-size: 28px;
+  line-height: 24px;
+  font-weight: 500;
+  margin: 0;
+  text-transform: none;
+}
+
+.partner-card--eu .partner__tagline{
+  font-family: Karla, system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 14px;
+  margin-top: 2px;
+  font-weight: 400;
+  color: rgb(74, 74, 74);
+  -webkit-font-smoothing: antialiased;
+}
+
